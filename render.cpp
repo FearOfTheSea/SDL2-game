@@ -7,13 +7,14 @@
 #include <string>
 #include <SDL_ttf.h>
 
-Render::Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font)
+Render::Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font, InputHandler* inputHandler)
 	: renderer(renderer)
 	, environment(environment)
 	, map(map)
     , highlightedTile(highlightedTile)
     , turnCounter(turnCounter)
     , font(font)
+    , inputHandler(inputHandler)
 {
     environment.importAssets();
 }

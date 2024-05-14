@@ -19,7 +19,7 @@ Game::Game()
 	highlightedTile = HighlightedTile();
 	inputHandler = InputHandler(&highlightedTile);
 	turnCounter = TurnCounter();
-	render = new Render(renderer, map, environment, highlightedTile, turnCounter, font);
+	render = new Render(renderer, map, environment, highlightedTile, turnCounter, font, &inputHandler);
 }
 void Game::run()
 {

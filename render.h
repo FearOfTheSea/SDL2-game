@@ -8,11 +8,12 @@
 #include "tile.h"
 #include "turncounter.h"
 #include <SDL_ttf.h>
+#include "inputhandler.h"
 
 class Render
 {
 public:
-	Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font);
+	Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font, InputHandler* inputHandler);
 	~Render();
 	void RenderScreen();
 private:
@@ -26,6 +27,7 @@ private:
 	const Environment& environment;
 	HighlightedTile& highlightedTile;
 	TurnCounter& turnCounter;
+	InputHandler* inputHandler;
 	TTF_Font* font;
 };
 
