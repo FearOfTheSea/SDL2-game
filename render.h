@@ -6,11 +6,13 @@
 #include "environment.h"
 #include "map.h"
 #include "tile.h"
+#include "turncounter.h"
+#include <SDL_ttf.h>
 
 class Render
 {
 public:
-	Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile);
+	Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font);
 	~Render();
 	void RenderScreen();
 private:
@@ -19,7 +21,12 @@ private:
 	void present();
 	void renderEnvironment();
 	void renderHighlightedTile();
+	void renderUI(int turn);
 	const Map& map;
 	const Environment& environment;
 	HighlightedTile& highlightedTile;
+	TurnCounter& turnCounter;
+	TTF_Font* font;
 };
+
+

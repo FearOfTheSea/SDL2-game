@@ -8,7 +8,7 @@
 #include "environment.h"
 #include "inputhandler.h"
 #include "tile.h"
-#include <SDL.h>
+#include "turncounter.h"
 
 class Game
 {
@@ -24,4 +24,5 @@ private:
 	Environment environment;
 	InputHandler inputHandler;
 	HighlightedTile highlightedTile;
+	TurnCounter turnCounter;
 };

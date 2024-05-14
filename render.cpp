@@ -2,12 +2,18 @@
 
 #include "render.h"
 #include <iostream>
+#include "turncounter.h"
+#include "SDL.h"
+#include <string>
+#include <SDL_ttf.h>
 
-Render::Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile)
+Render::Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font)
 	: renderer(renderer)
 	, environment(environment)
 	, map(map)
     , highlightedTile(highlightedTile)
+    , turnCounter(turnCounter)
+    , font(font)
 {
     environment.importAssets();
 }
@@ -22,11 +28,28 @@ void Render::present()
 {
 	SDL_RenderPresent(renderer);
 }
+void Render::renderUI(int turn)
+{
+    std::string turnText = "Current Turn: " + std::to_string(turnCounter.getTurn());
+    
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, turnText.c_str(), {0, 0, 0});
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    int texW, texH;
+    SDL_QueryTexture(textTexture, nullptr, nullptr, &texW, &texH);
+
+    SDL_Rect dstrect = { 820, 700, texW, texH };
+
+    SDL_RenderCopy(renderer, textTexture, nullptr, &dstrect);
+
+    SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(textTexture);
+}
 void Render::RenderScreen()
 {
 	clear();
 	renderEnvironment();
     renderHighlightedTile();
+    renderUI(turnCounter.getTurn());
 	present();
 }
 void Render::renderEnvironment()
@@ -49,7 +72,7 @@ void Render::renderHighlightedTile()
 {
     int tileX = highlightedTile.getX() * 32;
     int tileY = highlightedTile.getY() * 32;
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_Rect outlineRect = { tileX - 2, tileY - 2, 36, 36 };
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_Rect outlineRect = { tileX, tileY , 32, 32 };
     SDL_RenderDrawRect(renderer, &outlineRect);
 }

@@ -5,16 +5,21 @@
 #include "environment.h"
 #include "inputhandler.h"
 #include "tile.h"
+#include <iostream>
+#include <SDL_ttf.h>
 Game::Game()
 	: map("ASSETS/testMap.txt")
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window = SDL_CreateWindow("Sovereign Domination", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_SHOWN);
+	TTF_Init();
+	TTF_Font* font = TTF_OpenFont("ASSETS/arial.ttf", 24);
+	window = SDL_CreateWindow("Sovereign Domination", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 800, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	environment = Environment(renderer);
 	highlightedTile = HighlightedTile();
-	render = new Render(renderer, map, environment, highlightedTile);
 	inputHandler = InputHandler(&highlightedTile);
+	turnCounter = TurnCounter();
+	render = new Render(renderer, map, environment, highlightedTile, turnCounter, font);
 }
 void Game::run()
 {
