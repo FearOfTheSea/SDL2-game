@@ -27,7 +27,6 @@ After building the project, you can run the executable file (`SovereignDominatio
 - Arrow keys: Move the highlighted tile
 - Enter: End the current turn
 - WASD: Move your current Unit
-- Space: Conquer the city
 
 ## Version History
 - Ver 0.1 : Map and UI functional
@@ -44,6 +43,6 @@ After building the project, you can run the executable file (`SovereignDominatio
 
 The game assets (images, maps, etc.) are located in the `assets` directory. You can modify or replace these assets as needed.
 
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+## Credits
+Credits to the SDL2 library, guides by lazyfooproductions https://lazyfoo.net/tutorials.
+This game is inspired by Polytopia.
