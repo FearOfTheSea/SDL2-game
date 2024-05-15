@@ -9,6 +9,7 @@
 #include "turncounter.h"
 #include <SDL_ttf.h>
 #include "inputhandler.h"
+#include "vector"
 
 class Render
 {
@@ -23,6 +24,7 @@ private:
 	void renderEnvironment();
 	void renderHighlightedTile();
 	void renderUI(int turn);
+	void renderStuctures(int x, int y);
 	const Map& map;
 	const Environment& environment;
 	HighlightedTile& highlightedTile;

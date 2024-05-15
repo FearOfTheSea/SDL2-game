@@ -13,6 +13,11 @@ bool InputHandler::handleEvent()
 		case SDL_QUIT:
 			return false;
 		case SDL_KEYDOWN:
+			if (event.key.keysym.sym == SDLK_RETURN)
+			{
+				turnCounter->increment();
+				std::cout << turnCounter->getTurn();
+			}
 			highlightedTile->changeHighlightedTile(event);
 			break;
 		}

@@ -45,12 +45,15 @@ void Render::renderUI(int turn)
     SDL_FreeSurface(textSurface);
     SDL_DestroyTexture(textTexture);
 }
+
 void Render::RenderScreen()
 {
 	clear();
 	renderEnvironment();
     renderHighlightedTile();
     renderUI(turnCounter.getTurn());
+    
+    renderStuctures(9, 10);
 	present();
 }
 void Render::renderEnvironment()
@@ -76,4 +79,14 @@ void Render::renderHighlightedTile()
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_Rect outlineRect = { tileX, tileY , 32, 32 };
     SDL_RenderDrawRect(renderer, &outlineRect);
+}
+
+void Render::renderStuctures(int x, int y)
+{
+        SDL_Surface* structureSurface = SDL_LoadBMP("ASSETS/Capital.bmp");
+        SDL_Texture* structureTexture = SDL_CreateTextureFromSurface(renderer, structureSurface);
+        if (structureTexture) {
+            SDL_Rect dstRectangle = { x * 32, y * 32, 32, 32 };
+            SDL_RenderCopy(renderer, structureTexture, nullptr, &dstRectangle);
+        }
 }

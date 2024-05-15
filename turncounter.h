@@ -3,8 +3,8 @@
 class TurnCounter 
 {
 public:
-    TurnCounter() : turn(0) {}
-
+    TurnCounter(int turn) : turn(turn) {}
+    TurnCounter() = default;
     void increment() 
     {
         turn++;

@@ -17,8 +17,8 @@ Game::Game()
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	environment = Environment(renderer);
 	highlightedTile = HighlightedTile();
-	inputHandler = InputHandler(&highlightedTile);
-	turnCounter = TurnCounter();
+	turnCounter = TurnCounter(0);
+	inputHandler = InputHandler(&highlightedTile, &turnCounter);
 	render = new Render(renderer, map, environment, highlightedTile, turnCounter, font, &inputHandler);
 }
 void Game::run()
