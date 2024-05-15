@@ -26,6 +26,8 @@ After building the project, you can run the executable file (`SovereignDominatio
 
 - Arrow keys: Move the highlighted tile
 - Enter: End the current turn
+- WASD: Move your current Unit
+- Space: Conquer the city
 
 ## Assets
 
