@@ -1,5 +1,6 @@
 #include "unit.h"
 #include <iostream>
+#include "render.h"
 void Unit::moveUnit(SDL_Event event)
 {
 	switch (event.key.keysym.sym)
@@ -16,7 +17,7 @@ void Unit::moveUnit(SDL_Event event)
 	case SDLK_d:
 		x++;
 		break;
-		default:
+	default:
 		break;
 	}
 	if (x < 0) x = 0;

@@ -72,6 +72,19 @@ void Render::renderUI(int turn)
 
     SDL_FreeSurface(textSurface2);
     SDL_DestroyTexture(textTexture2);
+
+    std::string turnText3 = "wasd : move unit";
+
+    SDL_Surface* textSurface3 = TTF_RenderText_Solid(font, turnText3.c_str(), { 0, 0, 0 });
+    SDL_Texture* textTexture3 = SDL_CreateTextureFromSurface(renderer, textSurface3);
+    SDL_QueryTexture(textTexture3, nullptr, nullptr, &texW, &texH);
+
+    SDL_Rect dstrect3 = { 810, 100, texW, texH };
+
+    SDL_RenderCopy(renderer, textTexture3, nullptr, &dstrect3);
+
+    SDL_FreeSurface(textSurface3);
+    SDL_DestroyTexture(textTexture3);
 }
 void Render::renderWarrior()
 {
@@ -90,9 +103,10 @@ void Render::RenderScreen()
 	renderEnvironment();
     renderHighlightedTile();
     renderUI(turnCounter.getTurn());
-    
     renderStuctures(9, 10);
     renderWarrior();
+    if (warrior->getX() == 9 && warrior->getY() == 10)
+        renderVictory();
 	present();
 }
 void Render::renderEnvironment()
@@ -128,4 +142,12 @@ void Render::renderStuctures(int x, int y)
             SDL_Rect dstRectangle = { x * 32, y * 32, 32, 32 };
             SDL_RenderCopy(renderer, structureTexture, nullptr, &dstRectangle);
         }
+}
+
+void Render::renderVictory()
+{
+    SDL_Surface* surface = SDL_LoadBMP("ASSETS/win.bmp");
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Rect rect = { 300, 300, 400, 200 };
+    SDL_RenderCopy(renderer, texture, nullptr, &rect);
 }

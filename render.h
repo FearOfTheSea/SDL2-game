@@ -28,6 +28,7 @@ private:
 	void renderUI(int turn);
 	void renderStuctures(int x, int y);
 	void renderWarrior();
+	void renderVictory();
 	const Map& map;
 	const Environment& environment;
 	HighlightedTile& highlightedTile;
@@ -36,5 +37,4 @@ private:
 	TTF_Font* font;
 	Warrior* warrior;
 };
-
 

@@ -9,9 +9,7 @@ public:
     {
         turn++;
     }
-
     int getTurn() const { return turn; }
-
 private:
     int turn;
 };
