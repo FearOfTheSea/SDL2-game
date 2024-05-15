@@ -27,6 +27,7 @@
     <ClCompile Include="render.cpp" />
     <ClCompile Include="structure.cpp" />
     <ClCompile Include="tile.cpp" />
+    <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="environment.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="structures.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="turncounter.h" />
+    <ClInclude Include="unit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\Desert.bmp" />

@@ -7,7 +7,8 @@
 #include <string>
 #include <SDL_ttf.h>
 
-Render::Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font, InputHandler* inputHandler)
+Render::Render(SDL_Renderer* renderer, const Map& map, Environment& environment, HighlightedTile& highlightedTile, TurnCounter& turnCounter, TTF_Font* font, InputHandler* inputHandler
+        ,Warrior* warrior)
 	: renderer(renderer)
 	, environment(environment)
 	, map(map)
@@ -15,6 +16,7 @@ Render::Render(SDL_Renderer* renderer, const Map& map, Environment& environment,
     , turnCounter(turnCounter)
     , font(font)
     , inputHandler(inputHandler)
+    , warrior(warrior)
 {
     environment.importAssets();
 }
@@ -44,8 +46,44 @@ void Render::renderUI(int turn)
 
     SDL_FreeSurface(textSurface);
     SDL_DestroyTexture(textTexture);
-}
 
+    std::string turnText1 = "Arrows : navigate";
+
+    SDL_Surface* textSurface1 = TTF_RenderText_Solid(font, turnText1.c_str(), { 0, 0, 0 });
+    SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
+    SDL_QueryTexture(textTexture1, nullptr, nullptr, &texW, &texH);
+
+    SDL_Rect dstrect1 = { 810, 500, texW, texH };
+
+    SDL_RenderCopy(renderer, textTexture1, nullptr, &dstrect1);
+
+    SDL_FreeSurface(textSurface1);
+    SDL_DestroyTexture(textTexture1);
+
+    std::string turnText2 = "Enter : new turn";
+
+    SDL_Surface* textSurface2 = TTF_RenderText_Solid(font, turnText2.c_str(), { 0, 0, 0 });
+    SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
+    SDL_QueryTexture(textTexture2, nullptr, nullptr, &texW, &texH);
+
+    SDL_Rect dstrect2 = { 810, 300, texW, texH };
+
+    SDL_RenderCopy(renderer, textTexture2, nullptr, &dstrect2);
+
+    SDL_FreeSurface(textSurface2);
+    SDL_DestroyTexture(textTexture2);
+}
+void Render::renderWarrior()
+{
+    int x = warrior->getX();
+    int y = warrior->getY();
+    SDL_Surface* surface = SDL_LoadBMP("ASSETS/Swordman.bmp");
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Rect dstRectangle = { x * 32, y * 32, 32, 32 };
+    SDL_RenderCopy(renderer, texture, nullptr, &dstRectangle);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+}
 void Render::RenderScreen()
 {
 	clear();
@@ -54,6 +92,7 @@ void Render::RenderScreen()
     renderUI(turnCounter.getTurn());
     
     renderStuctures(9, 10);
+    renderWarrior();
 	present();
 }
 void Render::renderEnvironment()

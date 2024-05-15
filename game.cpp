@@ -18,8 +18,9 @@ Game::Game()
 	environment = Environment(renderer);
 	highlightedTile = HighlightedTile();
 	turnCounter = TurnCounter(0);
-	inputHandler = InputHandler(&highlightedTile, &turnCounter);
-	render = new Render(renderer, map, environment, highlightedTile, turnCounter, font, &inputHandler);
+	warrior = Warrior();
+	inputHandler = InputHandler(&highlightedTile, &turnCounter, &warrior);
+	render = new Render(renderer, map, environment, highlightedTile, turnCounter, font, &inputHandler, &warrior);
 }
 void Game::run()
 {

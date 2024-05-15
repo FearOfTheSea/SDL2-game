@@ -31,3 +31,4 @@ void HighlightedTile::changeHighlightedTile(const SDL_Event& event)
 	if (y > 25) y = 25;
 	std::cout << x << " " << y << '\n';
 }
+

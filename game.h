@@ -9,6 +9,7 @@
 #include "inputhandler.h"
 #include "tile.h"
 #include "turncounter.h"
+#include "unit.h"
 
 class Game
 {
@@ -25,4 +26,5 @@ private:
 	InputHandler inputHandler;
 	HighlightedTile highlightedTile;
 	TurnCounter turnCounter;
+	Warrior warrior;
 };

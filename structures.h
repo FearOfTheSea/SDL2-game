@@ -4,7 +4,6 @@
 
 class StructureCapital
 {
-	
 public:
 	int x;
 	int y;
