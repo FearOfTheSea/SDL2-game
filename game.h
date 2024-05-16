@@ -1,30 +1,19 @@
-//game.h
-
 #pragma once
 
-#include "SDL.h"
-#include "map.h"
-#include "render.h"
-#include "environment.h"
-#include "inputhandler.h"
-#include "tile.h"
-#include "turncounter.h"
-#include "unit.h"
+#include <SDL.h>
 
 class Game
 {
 public:
-	Game();
-	void run();
-	void close();
+	virtual ~Game() {}
+	virtual void run();
+protected:
+	SDL_Renderer* getRenderer();
+	SDL_Window* getWindow();
+	virtual void render();
+	virtual bool handleEvent(SDL_Event& event);
+	virtual void nextGameState();
 private:
-	SDL_Window* window{ nullptr };
-	SDL_Renderer* renderer{ nullptr };
-	Render* render{ nullptr };
-	Map map;
-	Environment environment;
-	InputHandler inputHandler;
-	HighlightedTile highlightedTile;
-	TurnCounter turnCounter;
-	Warrior warrior;
+	static SDL_Window* window;
+	static SDL_Renderer* renderer;
 };

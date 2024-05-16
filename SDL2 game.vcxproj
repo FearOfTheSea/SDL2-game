@@ -19,35 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="environment.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="inputhandler.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="map.cpp" />
-    <ClCompile Include="render.cpp" />
-    <ClCompile Include="structure.cpp" />
-    <ClCompile Include="tile.cpp" />
-    <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="environment.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="inputhandler.h" />
-    <ClInclude Include="map.h" />
-    <ClInclude Include="render.h" />
-    <ClInclude Include="structures.h" />
-    <ClInclude Include="tile.h" />
-    <ClInclude Include="turncounter.h" />
-    <ClInclude Include="unit.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="ASSETS\Desert.bmp" />
-    <Image Include="ASSETS\Forest.bmp" />
-    <Image Include="ASSETS\Grass.bmp" />
-    <Image Include="ASSETS\Mountain.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ASSETS\testMap.txt" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameMenu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -102,8 +80,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\SDL\SDL2_ttf-2.22.0\include;C:\SDL\SDL2-2.30.3\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SDL\SDL2_ttf-2.22.0\lib\x64;C:\SDL\SDL2-2.30.3\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\SDL\SDL2_mixer-2.8.0\include;C:\SDL\SDL2_ttf-2.22.0\include;C:\SDL\SDL2-2.30.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL\SDL2_mixer-2.8.0\lib\x64;C:\SDL\SDL2_ttf-2.22.0\lib\x64;C:\SDL\SDL2-2.30.3\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -143,7 +121,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -1,6 +1,5 @@
-//main.cpp
-
-#include "game.h"
+#include "Game.h"
+#include <iostream>
 
 int main(int argc, char* argv[])
 {
