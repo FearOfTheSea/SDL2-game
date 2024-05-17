@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include "Game.h"
 #include <vector>
+#include <array>
 class GamePlay : public Game
 {
 public:
@@ -16,7 +17,7 @@ private:
 	SDL_Renderer* renderer{ getRenderer() };
 	SDL_Window* window{ getWindow() };
 	
-	std::vector<std::vector<int>> mapData;
+	std::array<std::array<int, 25>, 25> mapData;
 
 	//std::vector<std::vector<Unit>> unitData;
 	//std::vector<std::vector<Structure>> structureData;

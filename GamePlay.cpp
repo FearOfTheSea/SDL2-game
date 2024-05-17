@@ -7,14 +7,9 @@
 #include <random>
 #include <iostream>
 
-void generateMapData(std::vector<std::vector<int>>& base)
+void generateMapData(std::array<std::array<int, 25>, 25>& base)
 {
-	base.resize(25);
-	for (auto& row : base)
-	{
-		row.resize(25);
-	}
-	std::mt19937 randomNumGenerator{};
+	std::mt19937 randomNumGenerator{ std::random_device{}() };
 	std::uniform_int_distribution<int> distribute{ 0, 9 };
 
 	for (int y{}; y < 25; y++)
@@ -48,6 +43,16 @@ void GamePlay::run()
 }
 void GamePlay::render()
 {
+	SDL_RenderClear(renderer);
+
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+	// Draw a white rectangle
+	SDL_Rect rect = { 100, 100, 200, 150 };
+	SDL_RenderFillRect(renderer, &rect);
+
+	// Update the screen with the rendering performed
+	SDL_RenderPresent(renderer);
 	return;
 }
 bool GamePlay::handleEvent(SDL_Event& event)
