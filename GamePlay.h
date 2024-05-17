@@ -9,7 +9,7 @@ class GamePlay : public Game
 public:
 	GamePlay();
 	~GamePlay();
-	enum class terrain{ grass0, grass1, jungle2, jungle3, desert4, desert5, desert6, mountain7, mountain8, water9 };
+	enum class terrain{ grass0, grass1, desert2, desert3, jungle4, jungle5, mountain6, mountain7, water8 };
 private:
 	void run() override;
 	void render() override;
@@ -19,6 +19,8 @@ private:
 	
 	std::array<std::array<int, 25>, 25> mapData;
 
+	std::array<SDL_Texture*, 10> terrainTextures;
+	void loadAssets();
 	//std::vector<std::vector<Unit>> unitData;
 	//std::vector<std::vector<Structure>> structureData;
 	//static int turn;
