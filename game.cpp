@@ -2,12 +2,14 @@
 #include "GameMenu.h"
 #include "GamePlay.h"
 #include <iostream>
+#include <SDL_ttf.h>
 
 SDL_Window* Game::window = nullptr;
 SDL_Renderer* Game::renderer = nullptr;
 void Game::run()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+	TTF_Init();
 	window = SDL_CreateWindow("Sovereign Domination", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1200, 800, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	GameMenu gameMenu;

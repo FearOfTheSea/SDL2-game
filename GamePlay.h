@@ -2,8 +2,12 @@
 
 #include <SDL.h>
 #include "Game.h"
+#include "Unit.h"
 #include <vector>
 #include <array>
+#include <SDL_ttf.h>
+#include <string>
+
 class GamePlay : public Game
 {
 public:
@@ -23,11 +27,24 @@ private:
 
 	std::array<SDL_Texture*, 9> terrainTextures;
 	std::array<SDL_Texture*, 3> cityTextures;
+	
+	std::vector<Unit*> allUnits;
+	void gameCreateUnit();
+	//void commandCreateUnit();
+
+	const char* getTerrainInfo();
+	void renderTerrainInfo();
+
+	const char* getUnitInfo();
+	void renderUnitInfo();
 
 	SDL_Texture* selectTexture;
+	SDL_Texture* UITexture;
 
+	TTF_Font* font;
 	void loadAssets();
-
+	
 	int x;
 	int y;
+	SDL_Texture* temp;
 };
