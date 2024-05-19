@@ -33,15 +33,22 @@ class AllyUnit : public Unit
 public:
 	AllyUnit() = default;
 	int getUnitType() override { return 1; }
-	AllyUnit(std::pair<int, int> coordinate)
+	AllyUnit(int x_, int y_)
 	{
-		x = coordinate.first;
-		y = coordinate.second;
+		x = x_;
+		y = y_;
 	}
 };
 
-/*class EnemyUnit : public Unit
+class EnemyUnit : public Unit
 {
 public:
-	void decideCommand();
-};*/
+	EnemyUnit() = default;
+	int getUnitType() override { return 2; }
+	EnemyUnit(int x_, int y_)
+	{
+		x = x_;
+		y = y_;
+	}
+	//void decideCommand();
+};

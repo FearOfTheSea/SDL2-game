@@ -32,10 +32,7 @@ private:
 	void gameCreateUnit();
 	//void commandCreateUnit();
 
-	const char* getTerrainInfo();
 	void renderTerrainInfo();
-
-	const char* getUnitInfo();
 	void renderUnitInfo();
 
 	SDL_Texture* selectTexture;
@@ -46,5 +43,12 @@ private:
 	
 	int x;
 	int y;
-	SDL_Texture* temp;
+
+	int resources;
+	int turn;
+
+	void endTurn();
+
+	SDL_Texture* allyUnitTexture;
+	SDL_Texture* enemyUnitTexture;
 };

@@ -12,8 +12,7 @@
 #include <SDL_ttf.h>
 #include "Unit.h"
 #include <utility>
-
-std::pair<int, int> linearSearch(std::array<std::array<GamePlay::city, 25>, 25> arr, GamePlay::city target);
+#include <cstring>
 
 static void generateMapData(std::array<std::array<int, 25>, 25>& base)
 {
@@ -178,6 +177,8 @@ static std::array<SDL_Texture*, 3> loadCityTextures(SDL_Renderer* renderer)
 	return textures;
 }
 GamePlay::GamePlay()
+    : resources{ 500 }
+    , turn{ 1 }
 {
 	generateMapData(mapData);
     generateCityData(cityData, getDifficulty());
@@ -199,7 +200,8 @@ void GamePlay::run()
 	}
 	SDL_Quit();
 }
-const char* GamePlay::getTerrainInfo()
+
+void GamePlay::renderTerrainInfo()
 {
     const char* s = nullptr;
     switch (mapData[x][y])
@@ -207,38 +209,28 @@ const char* GamePlay::getTerrainInfo()
     case 0:
     case 1:
         s = "Terrain type: Plain \nUnits gain 50% \nattacking bonus!\nUnits lose 50%\nless supply!";
-        return s;
+        break;
     case 2:
     case 3:
         s = "Terrain type: Desert\nUnits gain 100% \nattacking bonus!\nUnits lose 50%\nmore supply!";
-        return s;
+        break;
     case 4:
     case 5:
         s = "Terrain type: Jungle\nUnits gain 50% \ndefensive bonus!\nUnits lose 50%\nless supply!";
-        return s;
+        break;
     case 6:
     case 7:
-        s = "Terrain type: Mountain\nUnits gain 100% \ndefensive bonus!\nUnits lose 50%\n more supply!";
-        return s;
+        s = "Terrain type: Mountain\nUnits gain 100% \ndefensive bonus!\nUnits lose 50%\nmore supply!";
+        break;
     case 8:
         s = "Terrain type: Water\nUnits cannot move\nin here!";
-        return s;
+        break;
     default:
         s = "abc";
-        return s;
+        break;
     }
-}
-
-
-
-
-
-
-void GamePlay::renderTerrainInfo()
-{
     SDL_Color textColor = { 255, 255, 255 }; 
-    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, getTerrainInfo(), textColor, 450);
-
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, s, textColor, 450);
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 
     SDL_FreeSurface(textSurface);
@@ -246,9 +238,10 @@ void GamePlay::renderTerrainInfo()
     int textWidth, textHeight;
     SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
 
-    SDL_Rect textBox = { 815, 100, textWidth, textHeight };
+    SDL_Rect textBox = { 815, 50, textWidth, textHeight };
 
     SDL_RenderCopy(renderer, textTexture, nullptr, &textBox);
+    SDL_DestroyTexture(textTexture);
 }
 
 Unit* existsWithValues(const std::vector<Unit*>& vec, int a, int b) {
@@ -259,27 +252,31 @@ Unit* existsWithValues(const std::vector<Unit*>& vec, int a, int b) {
     }
     return nullptr;
 }
-
-const char* GamePlay::getUnitInfo()
+void GamePlay::renderUnitInfo()
 {
     Unit* temp = existsWithValues(allUnits, x, y);
+    const char* s = nullptr;
+    std::string result{ "This unit is an " };
     if (temp == nullptr)
     {
-        return "No units here!";
+        s = "No units here!";
     }
     else
     {
-        std::string s{};
-        if (temp->getUnitType() == 1) s += "This is ally unit!";
-        const char* a = "abc";
-        return a;
+        result += (temp->getUnitType() == 1 ? "Ally\n" : "Enemy\n");
+        result += ("The Unit has:\n");
+        result += (std::to_string(temp->getAttack()));
+        result += (" Attack\n");
+        result += (std::to_string(temp->getDefense()));
+        result += (" Defense\n");
+        result += (std::to_string(temp->getSupply()));
+        result += (" Supply\n");
+        s = result.c_str();
     }
-}
-void GamePlay::renderUnitInfo()
-{
+    
     SDL_Color textColor = { 255, 255, 255 };
-    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, getUnitInfo(), textColor, 450);
-    if (textSurface == nullptr) std::cout << "a";
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, s, textColor, 450);
+
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 
     SDL_FreeSurface(textSurface);
@@ -287,9 +284,10 @@ void GamePlay::renderUnitInfo()
     int textWidth, textHeight;
     SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
 
-    SDL_Rect textBox = { 815, 500, textWidth, textHeight };
+    SDL_Rect textBox = { 815, 350, textWidth, textHeight };
 
     SDL_RenderCopy(renderer, textTexture, nullptr, &textBox);
+    SDL_DestroyTexture(textTexture);
 }
 
 void GamePlay::render() 
@@ -328,13 +326,16 @@ void GamePlay::render()
         if (pUnit->getUnitType() == 1)
         {
             SDL_Rect unitRectangle = { pUnit->getX() * tileSize, pUnit->getY() * tileSize, tileSize, tileSize };
-            SDL_RenderCopy(renderer, temp, nullptr, &unitRectangle);
+            SDL_RenderCopy(renderer, allyUnitTexture, nullptr, &unitRectangle);
+        }
+        else
+        {
+            SDL_Rect unitRectangle = { pUnit->getX() * tileSize, pUnit->getY() * tileSize, tileSize, tileSize };
+            SDL_RenderCopy(renderer, enemyUnitTexture, nullptr, &unitRectangle);
         }
     }
     renderTerrainInfo();
     renderUnitInfo();
-
-
 
 	SDL_RenderPresent(renderer);
 }
@@ -376,30 +377,24 @@ void GamePlay::loadAssets()
     selectTexture = IMG_LoadTexture(renderer, "assets/select.png");
     UITexture = IMG_LoadTexture(renderer, "assets/ui.png");
     font = TTF_OpenFont("assets/font.ttf", 28);
-    if (font == nullptr) std::cout << "aaa";
-    temp = IMG_LoadTexture(renderer, "assets/temp.png");
-    if (temp == nullptr) std::cout << "a";
+    allyUnitTexture = IMG_LoadTexture(renderer, "assets/allyUnit.png");
+    enemyUnitTexture = IMG_LoadTexture(renderer, "assets/enemyUnit.png");
 }
-std::pair<int, int> linearSearch(std::array<std::array<GamePlay::city, 25>, 25> arr, GamePlay::city target)
+void GamePlay::gameCreateUnit()
 {
-    for (int i = 0; i < arr.size(); i++) {
-        for (int j = 0; j < arr[i].size(); j++) {
-            if (arr[i][j] == target) {
-                std::cout << j << " " << i;
-                std::pair<int, int> temp = std::make_pair(i, j);
-                return temp;
+    for (int j{}; j < 25; ++j)
+    {
+        for (int i{}; i < 25; ++i)
+        {
+            if (cityData[i][j] == city::allyCity)
+            {
+                allUnits.push_back(new AllyUnit(i, j));
+            }
+            else if (cityData[i][j] == city::enemyCity)
+            {
+                allUnits.push_back(new EnemyUnit(i, j));
             }
         }
     }
-    int j = -1, i = -1;
-    std::pair<int, int> temp2 = std::make_pair(j, i);
-    return temp2;
-
-}
-void GamePlay::gameCreateUnit()
-{ 
-    
-    allUnits.push_back(new AllyUnit(linearSearch(cityData, city::allyCity)));
-
 }
 
