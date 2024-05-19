@@ -334,8 +334,11 @@ void GamePlay::render()
             SDL_RenderCopy(renderer, enemyUnitTexture, nullptr, &unitRectangle);
         }
     }
+
     renderTerrainInfo();
     renderUnitInfo();
+    renderTurnInfo();
+    renderResourceInfo();
 
 	SDL_RenderPresent(renderer);
 }
@@ -360,6 +363,9 @@ bool GamePlay::handleEvent(SDL_Event& event)
             case SDLK_LEFT:
                 if (x > 0) x--;
                 return true;
+            case SDLK_SPACE:
+                endTurn();
+                return true;
             default:
                 return true;
             }
@@ -379,6 +385,7 @@ void GamePlay::loadAssets()
     font = TTF_OpenFont("assets/font.ttf", 28);
     allyUnitTexture = IMG_LoadTexture(renderer, "assets/allyUnit.png");
     enemyUnitTexture = IMG_LoadTexture(renderer, "assets/enemyUnit.png");
+    selectAllyUnitTexture = IMG_LoadTexture(renderer, "assets/allyUnitSelect.png");
 }
 void GamePlay::gameCreateUnit()
 {
@@ -398,3 +405,62 @@ void GamePlay::gameCreateUnit()
     }
 }
 
+void GamePlay::endTurn()
+{
+    turn++;
+}
+
+void GamePlay::renderTurnInfo()
+{
+    const char* s{ nullptr };
+    std::string result{ "Current Turn: " };
+    result += std::to_string(turn);
+    s = result.c_str();
+    SDL_Color textColor = { 255, 255, 255 };
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, s, textColor, 450);
+
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+    SDL_FreeSurface(textSurface);
+
+    int textWidth, textHeight;
+    SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
+
+    SDL_Rect textBox = { 815, 550, textWidth, textHeight };
+
+    SDL_RenderCopy(renderer, textTexture, nullptr, &textBox);
+    SDL_DestroyTexture(textTexture);
+}
+
+void GamePlay::renderResourceInfo()
+{
+    const char* s{ nullptr };
+    std::string result{ "Current Resource: " };
+    result += std::to_string(resources);
+    s = result.c_str();
+    SDL_Color textColor = { 255, 255, 255 };
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, s, textColor, 450);
+
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+    SDL_FreeSurface(textSurface);
+
+    int textWidth, textHeight;
+    SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
+
+    SDL_Rect textBox = { 815, 520, textWidth, textHeight };
+
+    SDL_RenderCopy(renderer, textTexture, nullptr, &textBox);
+    SDL_DestroyTexture(textTexture);
+}
+
+void GamePlay::chooseAllyUnit()
+{
+    if (existsWithValues(allUnits, x, y) == nullptr || existsWithValues(allUnits, x, y)->getUnitType() == 2)
+    {
+        return;
+    }
+    allyUnitX = x;
+    allyUnitY = y;
+    isAllyUnitSelected = true;
+}

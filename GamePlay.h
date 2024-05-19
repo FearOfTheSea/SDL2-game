@@ -15,6 +15,7 @@ public:
 	~GamePlay();
 	enum class terrain{ grass0, grass1, desert2, desert3, jungle4, jungle5, mountain6, mountain7, water8 };
 	enum class city{ neutralCity, allyCity, enemyCity, none };
+	std::array<std::array<int, 25>, 25> getMapData() const { return mapData; }
 private:
 	void run() override;
 	void render() override;
@@ -30,13 +31,15 @@ private:
 	
 	std::vector<Unit*> allUnits;
 	void gameCreateUnit();
-	//void commandCreateUnit();
 
 	void renderTerrainInfo();
 	void renderUnitInfo();
+	void renderTurnInfo();
+	void renderResourceInfo();
 
 	SDL_Texture* selectTexture;
 	SDL_Texture* UITexture;
+	SDL_Texture* selectAllyUnitTexture;
 
 	TTF_Font* font;
 	void loadAssets();
@@ -44,10 +47,17 @@ private:
 	int x;
 	int y;
 
+
+
 	int resources;
 	int turn;
 
 	void endTurn();
+	void chooseAllyUnit();
+	bool isAllyUnitSelected;
+
+	int allyUnitX;
+	int allyUnitY;
 
 	SDL_Texture* allyUnitTexture;
 	SDL_Texture* enemyUnitTexture;

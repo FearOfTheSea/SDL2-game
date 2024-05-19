@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utility>
+#include "GamePlay.h"
 
 class Unit
 {
@@ -12,20 +12,20 @@ public:
 	int getDefense() const { return defense; }
 	int getAttack() const { return attack; }
 	int getSupply() const { return supply; }
-	/*void commandMove();
-	void commandAttack();
+	void commandMove(int targetX, int targetY, std::array<std::array<int, 25>, 25> mapParameter);
+	/*void commandAttack();
 	void commandDefend();
 	void commandResupply();
 
 	bool deactivate();
 	bool reactivate();*/
-	//bool activated;
 protected:
 	int x{};
 	int y{};
 	int defense{ 100 };
 	int attack{ 100 };
 	int supply{ 100 };
+	bool activated{ true };
 };
 
 class AllyUnit : public Unit
