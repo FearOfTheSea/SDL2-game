@@ -34,6 +34,9 @@ After building the project, you can run the executable file (`SovereignDominatio
 
 - You lose when all of your units are dead.
 - You win when all the enemies units are dead.
+
+- In certain terrain, Units get different bonuses and penalties.
+
 ## Version History
 - Ver 0.1 : Map and UI functional
 - Ver 0.2 : Navigating with arrow keys possible
