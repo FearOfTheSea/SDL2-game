@@ -314,10 +314,13 @@ void GamePlay::render()
             SDL_RenderCopy(renderer, cityTextures[cityType], nullptr, &cityRectangle);
 		}
 	}
-    
+    if (isAllyUnitSelected == true) 
+    {
+        SDL_Rect selectAllyUnitRectangle = { allyUnitX * tileSize, allyUnitY * tileSize, tileSize, tileSize };
+        SDL_RenderCopy(renderer, selectAllyUnitTexture, nullptr, &selectAllyUnitRectangle);
+    }
     SDL_Rect selectRectangle = { x * tileSize, y * tileSize, tileSize, tileSize };
     SDL_RenderCopy(renderer, selectTexture, nullptr, &selectRectangle);
-
     SDL_Rect UIRectangle = { 800, 0, 400, 800 };
     SDL_RenderCopy(renderer, UITexture, nullptr, &UIRectangle);
 
@@ -366,9 +369,27 @@ bool GamePlay::handleEvent(SDL_Event& event)
             case SDLK_SPACE:
                 endTurn();
                 return true;
+            case SDLK_RETURN:
+                chooseAllyUnit();
+                return true;
+            case SDLK_1:
+                moveAllyUnit();
+                return true;
+            case SDLK_2:
+                resupplyAllyUnit();
+                return true;
+            case SDLK_3:
+                defendAllyUnit();
+                return true;
+            case SDLK_ESCAPE:
+                SDL_Quit();
+                return false;
             default:
                 return true;
             }
+        case SDL_QUIT:
+            SDL_Quit();
+            return false;
         default:
             return true;
         }
@@ -408,6 +429,23 @@ void GamePlay::gameCreateUnit()
 void GamePlay::endTurn()
 {
     turn++;
+    for (auto& unit : allUnits)
+    {
+        unit->reactivate();
+        if (unit->getUnitType() == 1) {
+            switch (static_cast<int>(cityData[unit->getX()][unit->getY()]))
+            {
+            case 0:
+                cityData[unit->getX()][unit->getY()] = GamePlay::city::allyCity;
+                break;
+            case 2:
+                cityData[unit->getX()][unit->getY()] = GamePlay::city::allyCity;
+                break;
+            default:
+                break;
+            }
+        }
+    }
 }
 
 void GamePlay::renderTurnInfo()
@@ -456,11 +494,41 @@ void GamePlay::renderResourceInfo()
 
 void GamePlay::chooseAllyUnit()
 {
-    if (existsWithValues(allUnits, x, y) == nullptr || existsWithValues(allUnits, x, y)->getUnitType() == 2)
+    Unit* temp = existsWithValues(allUnits, x, y);
+    if (temp == nullptr || temp->getUnitType() == 2)
     {
         return;
     }
     allyUnitX = x;
     allyUnitY = y;
     isAllyUnitSelected = true;
+    unitChosen = temp;
+}
+void GamePlay::moveAllyUnit()
+{
+    if (isAllyUnitSelected == false)
+        return;
+    if (unitChosen == nullptr)
+        return;
+    Unit* temp = existsWithValues(allUnits, x, y);
+    unitChosen->commandMove(x, y, mapData, temp);
+    isAllyUnitSelected = false;
+}
+void GamePlay::resupplyAllyUnit()
+{
+    if (isAllyUnitSelected == false)
+        return;
+    if (unitChosen == nullptr)
+        return;
+    unitChosen->commandResupply();
+    isAllyUnitSelected = false;
+}
+void GamePlay::defendAllyUnit()
+{
+    if (isAllyUnitSelected == false)
+        return;
+    if (unitChosen == nullptr)
+        return;
+    unitChosen->commandDefend();
+    isAllyUnitSelected = false;
 }

@@ -40,6 +40,8 @@ private:
 	SDL_Texture* selectTexture;
 	SDL_Texture* UITexture;
 	SDL_Texture* selectAllyUnitTexture;
+	SDL_Texture* allyUnitTexture;
+	SDL_Texture* enemyUnitTexture;
 
 	TTF_Font* font;
 	void loadAssets();
@@ -47,18 +49,19 @@ private:
 	int x;
 	int y;
 
-
-
 	int resources;
 	int turn;
 
 	void endTurn();
 	void chooseAllyUnit();
-	bool isAllyUnitSelected;
+	void moveAllyUnit();
+	void resupplyAllyUnit();
+	void defendAllyUnit();
+
+	bool isAllyUnitSelected = false;
+
+	Unit* unitChosen = nullptr;
 
 	int allyUnitX;
 	int allyUnitY;
-
-	SDL_Texture* allyUnitTexture;
-	SDL_Texture* enemyUnitTexture;
 };

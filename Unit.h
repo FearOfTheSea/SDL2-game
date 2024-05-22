@@ -1,6 +1,7 @@
 #pragma once
 
-#include "GamePlay.h"
+#include <array>
+#include <vector>
 
 class Unit
 {
@@ -12,20 +13,23 @@ public:
 	int getDefense() const { return defense; }
 	int getAttack() const { return attack; }
 	int getSupply() const { return supply; }
-	void commandMove(int targetX, int targetY, std::array<std::array<int, 25>, 25> mapParameter);
-	/*void commandAttack();
+
+	void adjustDefense(int newDefense) { defense = newDefense; }
+	void adjustAttack(int newAttack) { attack = newAttack; }
+	void adjustSupply(int newSupply) { supply = newSupply; }
+
+	void commandMove(int targetX, int targetY, const std::array<std::array<int, 25>, 25>& mapParameter, Unit* temp);
 	void commandDefend();
 	void commandResupply();
 
-	bool deactivate();
-	bool reactivate();*/
+	void reactivate() { activated = false;  }
 protected:
 	int x{};
 	int y{};
 	int defense{ 100 };
 	int attack{ 100 };
 	int supply{ 100 };
-	bool activated{ true };
+	bool activated{ false };
 };
 
 class AllyUnit : public Unit
@@ -50,5 +54,7 @@ public:
 		x = x_;
 		y = y_;
 	}
-	//void decideCommand();
+private:
+	void decideCommand(std::vector<Unit*> allUnits);
+	Unit* findNearestTarget(std::vector<Unit*> allUnits);
 };
