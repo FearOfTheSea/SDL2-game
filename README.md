@@ -51,4 +51,4 @@ The game assets (images, maps, etc.) are located in the `assets` directory. You 
 
 ## Credits
 Credits to the SDL2 library, guides by lazyfooproductions https://lazyfoo.net/tutorials.
-This game is inspired by Polytopia.
+This game is inspired by Polytopia, age of empires.
