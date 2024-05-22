@@ -28,8 +28,8 @@ After building the project, you can run the executable file (`SovereignDominatio
 - Enter: Choose your Unit
 - Space: End current turn
 - 1 : Move current Unit to tile
-- 2 : Command the Unit to raise defense
-- 3 : Command the Unit to resupply
+- 2 : Command the Unit to resupply
+- 3 : Command the Unit to defend
 - 4 : Create New Units in all cities
 
 - You lose when all of your units are dead.
