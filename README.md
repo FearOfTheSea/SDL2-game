@@ -31,6 +31,9 @@ After building the project, you can run the executable file (`SovereignDominatio
 - 2 : Command the Unit to raise defense
 - 3 : Command the Unit to resupply
 - 4 : Create New Units in all cities
+
+- You lose when all of your units are dead.
+- You win when all the enemies units are dead.
 ## Version History
 - Ver 0.1 : Map and UI functional
 - Ver 0.2 : Navigating with arrow keys possible
