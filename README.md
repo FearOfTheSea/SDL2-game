@@ -25,20 +25,23 @@ After building the project, you can run the executable file (`SovereignDominatio
 ## Game Controls
 
 - Arrow keys: Move the highlighted tile
-- Enter: End the current turn
-- WASD: Move your current Unit
-
+- Enter: Choose your Unit
+- Space: End current turn
+- 1 : Move current Unit to tile
+- 2 : Command the Unit to raise defense
+- 3 : Command the Unit to resupply
+- 4 : Create New Units in all cities
 ## Version History
 - Ver 0.1 : Map and UI functional
 - Ver 0.2 : Navigating with arrow keys possible
 - Ver 0.3 : Unit visually possible
 - Ver 0.4 : Moving the unit now possible
 - Ver 0.5 : Can now win by moving the unit to the enemy city
-- Ver 0.6 (planned) : Can now create new unit using resources
-- Ver 0.7 (planned) : Can now conquer new villages
-- Ver 0.8 (planned) : Add enemy units
-- Ver 0.9 (planned) : Can attack enemy units
-- Ver 1.0 (planned) : Improve UI, map, turn-based mechanics.
+- Ver 0.6 : Can now create new unit using resources
+- Ver 0.7  : Can now conquer new villages
+- Ver 0.8 : Add enemy units
+- Ver 0.9  : Can attack enemy units
+- Ver 1.0  : Improve UI, map, turn-based mechanics, Enemy AI implemeted.
 ## Assets
 
 The game assets (images, maps, etc.) are located in the `assets` directory. You can modify or replace these assets as needed.
